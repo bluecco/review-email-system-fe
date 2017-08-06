@@ -6,10 +6,10 @@ export default (store) => ({
   getComponent (nextState, cb) {
     require.ensure([], (require) => {
       // const Reviews = require('./containers/AdminContainer').default
-      const Reviews = require('./components/Reviews').default
-      // const reducer = require('./modules/admin').default
+      const Reviews = require('./containers/ReviewsContainer').default
+      const reducer = require('./modules/reviews').default
 
-      // injectReducer(store, { key: 'reviews', reducer })
+      injectReducer(store, { key: 'reviews', reducer })
 
       /*  Return getComponent   */
       cb(null, Reviews)
