@@ -98,9 +98,9 @@ describe('(Redux Module) Publish', () => {
     it('Should be exported as a function.', () => {
       expect(updatePublishStatus).to.be.a('function')
     })
-    it('should retrieve emails', () => {
+    it('should publish a review', () => {
       mockAxios.reset()
-      mockAxios.onGet(`${baseURL}/reviews/123/publish`).reply(200, [{ id: 1 }])
+      mockAxios.onPut(`${baseURL}/reviews/123/publish`).reply(200, [{ id: 1 }])
       const expectedActions = [
         {
           type: ADMIN_PUBLISH_LOADING,
@@ -118,9 +118,9 @@ describe('(Redux Module) Publish', () => {
         error => console.log(error)
       )
     })
-    it('should got error on retrieve emails', () => {
+    it('should got error on publish a review', () => {
       mockAxios.reset()
-      mockAxios.onGet(`${baseURL}/reviews/123/publish`).reply(500, { error : 'error' })
+      mockAxios.onPut(`${baseURL}/reviews/123/publish`).reply(500, { error : 'error' })
       const expectedActions = [
         {
           type: ADMIN_PUBLISH_LOADING,
