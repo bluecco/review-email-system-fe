@@ -66,7 +66,4 @@ export function publishing (state = [], { type, payload }) {
 // ------------------------------------
 // Selectors
 // ------------------------------------
-export const isPublishingSelector = state => {
-console.log(state.admin)
-  return state.admin.publishing
-}
+export const isPublishingSelector = state => state.admin.publishing

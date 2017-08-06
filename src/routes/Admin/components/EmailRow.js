@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Row, Column } from 'hedron'
 import Moment from 'react-moment'
 
-export const EmailRow = ({ arrivalDate, email, score, published, publishFn, analyzeFn }) => {
+export const EmailRow = ({ arrivalDate, email, score, published, publishFn, analyzeFn, publishing, analyzing  }) => {
 
   return (
   <Row>
@@ -14,9 +14,16 @@ export const EmailRow = ({ arrivalDate, email, score, published, publishFn, anal
       {email}
     </Column>
     <Column sm={3}>
-    <div>
-      {score}
-      <button type="button" className="btn btn-primary" onClick={analyzeFn}>analyze</button>
+      <div>
+        {score}
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={analyzeFn}
+          disabled={analyzing}
+        >
+          analyze
+        </button>
       </div>
     </Column>
     <Column sm={3}>
@@ -25,6 +32,7 @@ export const EmailRow = ({ arrivalDate, email, score, published, publishFn, anal
         className="form-control"
         defaultValue={published.toString()}
         onChange={publishFn}
+        disabled={publishing}
       >
         <option value="true">Yes</option>
         <option value="false">No</option>

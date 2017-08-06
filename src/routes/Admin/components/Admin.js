@@ -20,8 +20,7 @@ export class Admin extends Component {
   }
 
   render () {
-    const { emails } = this.props
-    console.log(this.props)
+    const { emails, publishing, analyzing } = this.props
 
     return (
       <div>
@@ -36,6 +35,8 @@ export class Admin extends Component {
                 published={email.published}
                 analyzeFn={() => this.handleAnalyzeClick(email.messageId)}
                 publishFn={() => this.handlePublishClick(email.messageId)}
+                publishing={publishing.includes(email.messageId)}
+                analyzing={analyzing.includes(email.messageId)}
               />
               <div style={{'border': 'solid 1px black'}}></div>
             </div>
