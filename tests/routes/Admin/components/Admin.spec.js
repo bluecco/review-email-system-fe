@@ -26,10 +26,6 @@ describe('(Component) Admin', () => {
       _wrapper = shallow(<Counter {..._props} />)
     })
 
-    it('renders as a <div>.', () => {
-      expect(_wrapper.is('div')).to.equal(true)
-    })
-
     it('renders with an <Header>', () => {
       expect(_wrapper.find(Header)).to.have.length(1)
     })

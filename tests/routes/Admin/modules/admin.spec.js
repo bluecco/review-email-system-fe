@@ -119,7 +119,7 @@ describe('(Redux Module) Admin', () => {
     })
     it('should retrieve emails', () => {
       mockAxios.reset()
-      mockAxios.onGet(`${baseURL}/posts`).reply(200, [{ id: 1 }])
+      mockAxios.onGet(`${baseURL}/reviews`).reply(200, [{ id: 1 }])
       const expectedActions = [
         {
           type: ADMIN_LOADING,
@@ -139,7 +139,7 @@ describe('(Redux Module) Admin', () => {
     })
     it('should got error on retrieve emails', () => {
       mockAxios.reset()
-      mockAxios.onGet(`${baseURL}/posts`).reply(500, { error : 'error' })
+      mockAxios.onGet(`${baseURL}/reviews`).reply(500, { error : 'error' })
       const expectedActions = [
         {
           type: ADMIN_LOADING,

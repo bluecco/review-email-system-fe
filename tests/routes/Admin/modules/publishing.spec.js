@@ -7,7 +7,7 @@ import {
   publishOk,
   publishError,
   publishing
-} from 'routes/Admin/modules/admin'
+} from 'routes/Admin/modules/publishing'
 import { baseURL } from 'common'
 
 import MockAdapter from 'axios-mock-adapter'
@@ -45,10 +45,10 @@ describe('(Redux Module) Publish', () => {
       expect(state).to.be.empty
 
       state = publishing(state, publishOk({ id: 1 }))
-      expect(state).to.have.lengthOf(2)
+      expect(state).to.have.lengthOf(1)
 
       state = publishing(state, { type : 'UNKNOWN' })
-      expect(state).to.have.lengthOf(2)
+      expect(state).to.have.lengthOf(1)
     })
   })
 
@@ -58,11 +58,11 @@ describe('(Redux Module) Publish', () => {
     })
 
     it('Should return an action with type "ADMIN_PUBLISH_LOADING".', () => {
-      expect(publishLoading()).to.have.property('type', ADMIN_PUBLISH_LOADING)
+      expect(publishLoading('123')).to.have.property('type', ADMIN_PUBLISH_LOADING)
     })
 
     it('Should assign the first argument to the "payload" property.', () => {
-      expect(publishLoading()).to.have.property('payload', true)
+      expect(publishLoading('123')).to.have.property('payload').to.eql('123')
     })
   })
 
@@ -100,7 +100,7 @@ describe('(Redux Module) Publish', () => {
     })
     it('should retrieve emails', () => {
       mockAxios.reset()
-      mockAxios.onGet(`${baseURL}/posts`).reply(200, [{ id: 1 }])
+      mockAxios.onGet(`${baseURL}/reviews/123/publish`).reply(200, [{ id: 1 }])
       const expectedActions = [
         {
           type: ADMIN_PUBLISH_LOADING,
@@ -113,14 +113,14 @@ describe('(Redux Module) Publish', () => {
       ]
 
       const store = mockStore({ emails : [] }, expectedActions)
-      return store.dispatch(updatePublishStatus()).then(
+      return store.dispatch(updatePublishStatus('123')).then(
         () => expect(store.getActions()).to.eql(expectedActions),
         error => console.log(error)
       )
     })
     it('should got error on retrieve emails', () => {
       mockAxios.reset()
-      mockAxios.onGet(`${baseURL}/posts`).reply(500, { error : 'error' })
+      mockAxios.onGet(`${baseURL}/reviews/123/publish`).reply(500, { error : 'error' })
       const expectedActions = [
         {
           type: ADMIN_PUBLISH_LOADING,
@@ -133,7 +133,7 @@ describe('(Redux Module) Publish', () => {
       ]
 
       const store = mockStore({ emails : [] }, expectedActions)
-      return store.dispatch(updatePublishStatus()).then(
+      return store.dispatch(updatePublishStatus('123')).then(
         () => expect(store.getActions()).to.eql(expectedActions),
         error => console.log(error)
       )
