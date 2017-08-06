@@ -44,7 +44,7 @@ describe('(Redux Module) Publish', () => {
       let state = publishing(undefined, {})
       expect(state).to.be.empty
 
-      state = publishing(state, publishOk({ id: 1 }))
+      state = publishing(state, publishLoading({ id: 1 }))
       expect(state).to.have.lengthOf(1)
 
       state = publishing(state, { type : 'UNKNOWN' })

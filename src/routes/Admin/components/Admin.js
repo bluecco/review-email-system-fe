@@ -21,10 +21,6 @@ export class Admin extends Component {
 
   render () {
     const { emails, publishing, analyzing } = this.props
-
-    var d = new Date("2016-01-27T14:05:45 +0000");
-    console.log(d.getTime()); //returns 1340220044000
-
     return (
       <div>
         <Header />

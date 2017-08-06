@@ -1,6 +1,6 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
-import { Reviews } from 'routes/Reviews/components/Reviews'
+import { Reviews, ReviewRow } from 'routes/Reviews/components'
 import { shallow, mount } from 'enzyme'
 
 describe('(Component) Reviews', () => {
@@ -15,7 +15,7 @@ describe('(Component) Reviews', () => {
       ],
       ...bindActionCreators(
         {
-          fetchEmails : (_spies.fetchEmails = sinon.spy())
+          fetchReviews : (_spies.fetchReviews = sinon.spy())
         },
         _spies.dispatch = sinon.spy()
       )
@@ -23,11 +23,11 @@ describe('(Component) Reviews', () => {
   })
   describe('- Shallow -', () => {
     beforeEach(() => {
-      _wrapper = shallow(<Counter {..._props} />)
+      _wrapper = shallow(<Reviews {..._props} />)
     })
 
-    it('renders with an <ReviewsRow>', () => {
-      expect(_wrapper.find(ReviewsRow)).to.have.length(1)
+    it('renders with an <ReviewRow>', () => {
+      expect(_wrapper.find(ReviewRow)).to.have.length(3)
     })
 
     it('should call fetchReviews', () => {
