@@ -4,7 +4,7 @@ import { Row, Column } from 'hedron'
 import Moment from 'react-moment'
 
 export const EmailRow = ({ arrivalDate, email, score, published, publishFn, analyzeFn, publishing, analyzing  }) => (
-  <Row style={{'background': score < 70 ? 'Crimson' : 'LimeGreen'}}>
+  <Row style={{'background': !score ? 'lightgrey' : score < 70 ? 'Crimson' : 'LimeGreen'}}>
 
     <Column sm={3}>
       <Moment
