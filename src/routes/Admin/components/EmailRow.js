@@ -3,12 +3,8 @@ import PropTypes from 'prop-types'
 import { Row, Column } from 'hedron'
 import Moment from 'react-moment'
 
-export const EmailRow = ({ arrivalDate, email, score, published, publishFn, analyzeFn, publishing, analyzing  }) => {
-
-  const color = score < 70 ? 'Crimson' : 'LimeGreen'
-
-  return (
-  <Row style={{'background': color}}>
+export const EmailRow = ({ arrivalDate, email, score, published, publishFn, analyzeFn, publishing, analyzing  }) => (
+  <Row style={{'background': score < 70 ? 'Crimson' : 'LimeGreen'}}>
 
     <Column sm={3}>
       <Moment
@@ -51,10 +47,9 @@ export const EmailRow = ({ arrivalDate, email, score, published, publishFn, anal
       </select>
       </div>
     </Column>
-    
+
   </Row>
 )
-}
 
 EmailRow.propTypes = {
   arrivalDate      : PropTypes.number.isRequired,
