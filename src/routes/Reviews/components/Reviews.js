@@ -16,8 +16,10 @@ export class Reviews extends Component {
 
         {
           reviews.map(review =>
-            <div key={review.messageId}
-            style={{'border': 'solid 1px lightgrey'}}>
+            <div
+              key={review.messageId}
+              style={{'border': 'solid 1px lightgrey', marginBottom : '40px'}}
+            >
               <ReviewRow
 
                 arrivalDate={review.arrivalDate}
@@ -26,7 +28,6 @@ export class Reviews extends Component {
                 fromEmail={review.fromEmail}
                 fromDisplayName={review.fromDisplayName}
               />
-              <div></div>
             </div>
           )
         }
