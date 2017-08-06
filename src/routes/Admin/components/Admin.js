@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Header, EmailRow } from './index'
 import { Row, Column } from 'hedron'
+import { Header, EmailRow } from './index'
 
 export class Admin extends Component {
   componentWillMount () {

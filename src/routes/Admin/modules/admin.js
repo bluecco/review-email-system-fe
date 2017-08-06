@@ -39,7 +39,7 @@ export function fetchEmailsError (payload) {
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const fetchEmails = (page = 0, size = 2) => {
+export const fetchEmails = (page = 0, size = 20) => {
   return dispatch => {
     dispatch(fetchEmailsLoading())
     // TODO: add page and size parameters
