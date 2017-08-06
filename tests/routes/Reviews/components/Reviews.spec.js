@@ -13,6 +13,15 @@ describe('(Component) Reviews', () => {
         { arrivalDate: 2, subject: 'subject', 'body': 'body', emailFrom: 'email', score: 20, published: true },
         { arrivalDate: 3, subject: 'subject', 'body': 'body', emailFrom: 'email', score: 30, published: true }
       ],
+      pageable: {
+        number : 1,
+        totalElements: 1,
+        totalPages: 1,
+        size: 1,
+        numberOfElements: 1,
+        first: 1,
+        last: 1
+      },
       ...bindActionCreators(
         {
           fetchReviews : (_spies.fetchReviews = sinon.spy())
