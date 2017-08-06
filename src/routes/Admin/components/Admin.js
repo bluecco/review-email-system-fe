@@ -9,13 +9,20 @@ export class Admin extends Component {
   }
 
   handlePublishClick (id) {
-    debugger;
     const { updatePublishStatus } = this.props
     updatePublishStatus(id)
   }
 
+  handleAnalyzeClick (id) {
+    debugger
+    const { analyzeSentiment } = this.props
+    analyzeSentiment(id)
+
+  }
+
   render () {
     const { emails } = this.props
+    console.log(emails[0])
 
     return (
       <div>
@@ -28,6 +35,7 @@ export class Admin extends Component {
                 email={email.fromEmail}
                 score={email.score}
                 published={email.published}
+                analyzeFn={() => this.handleAnalyzeClick(email.messageId)}
                 publishFn={() => this.handlePublishClick(email.messageId)}
               />
               <div style={{'border': 'solid 1px black'}}></div>

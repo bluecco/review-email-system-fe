@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { baseURL } from '../../../common'
 import { createSelector } from 'reselect'
 import { publishing, ADMIN_PUBLISH_OK, ADMIN_PUBLISH_ERROR } from './publishing'
+import { analyzing, ADMIN_ANALYZE_OK, ADMIN_ANALYZE_ERROR } from './analyze'
 import axios from 'axios'
 
 // ------------------------------------
@@ -66,11 +67,16 @@ export function emails (state = [], { type, payload }) {
   switch (type) {
     case ADMIN_EMAILS_RETRIEVED:
       return payload
-    case ADMIN_EMAILS_RETRIEVED_ERROR: case ADMIN_PUBLISH_ERROR:
+    case ADMIN_EMAILS_RETRIEVED_ERROR: case ADMIN_PUBLISH_ERROR: case ADMIN_ANALYZE_ERROR:
       return state
     case ADMIN_PUBLISH_OK:
-      let mod = [].concat(state).map(current => current.id === payload.id ? { ...current, published: true } : current)
+    debugger
+      let mod = [].concat(state).map(current => current.messageId === payload.messageId ? { ...current, published: true } : current)
       return mod
+    case ADMIN_ANALYZE_OK:
+      debugger
+      let scored = [].concat(state).map(current => current.messageId === payload.messageId ? { ...current, score: payload.score } : current)
+      return scored
     default:
       return state
   }

@@ -4,15 +4,15 @@ import {
   getAdminMails,
   isLoadingSelector
 } from '../modules/admin'
-import {
-  updatePublishStatus
-} from '../modules/publishing'
+import { updatePublishStatus } from '../modules/publishing'
+import { analyzeSentiment } from '../modules/analyze'
 
 import Admin from '../components/Admin'
 
 const mapDispatchToProps = {
   fetchEmails,
-  updatePublishStatus
+  updatePublishStatus,
+  analyzeSentiment
 }
 
 const mapStateToProps = (state) => ({
