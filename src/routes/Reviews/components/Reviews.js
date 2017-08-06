@@ -9,9 +9,7 @@ export class Reviews extends Component {
   }
 
   render () {
-
     const { reviews } = this.props
-    console.log(reviews)
     return (
       <div>
         <h1>Reviews</h1>

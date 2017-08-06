@@ -5,27 +5,39 @@ import Moment from 'react-moment'
 
 export const EmailRow = ({ arrivalDate, email, score, published, publishFn, analyzeFn, publishing, analyzing  }) => {
 
+  const color = score < 70 ? 'Crimson' : 'LimeGreen'
+
   return (
-  <Row>
+  <Row style={{'background': color}}>
+
     <Column sm={3}>
-      <Moment format="YYYY-MM-DD HH:mm">{arrivalDate}</Moment>
+      <Moment
+        format="YYYY-MM-DD HH:mm"
+        style={{'color' : 'white'}}
+      >
+        {arrivalDate}
+      </Moment>
     </Column>
+
     <Column sm={3}>
-      {email}
+      <span style={{'color' : 'white'}}>{email}</span>
     </Column>
-    <Column sm={3}>
-      <div>
-        {score}
+
+    <Column sm={2}>
+      <div style={{'position' : 'relative'}}>
+        <span style={{'color' : 'white'}}>{score}</span>
         <button
+          style={{'position': 'absolute', 'right': '0'}}
           type="button"
           className="btn btn-primary"
           onClick={analyzeFn}
           disabled={analyzing}
         >
-          analyze
+          <i className="fa fa-refresh"></i>
         </button>
       </div>
     </Column>
+
     <Column sm={3}>
     <div>
       <select
@@ -39,6 +51,7 @@ export const EmailRow = ({ arrivalDate, email, score, published, publishFn, anal
       </select>
       </div>
     </Column>
+    
   </Row>
 )
 }
