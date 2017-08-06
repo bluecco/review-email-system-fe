@@ -70,11 +70,9 @@ export function emails (state = [], { type, payload }) {
     case ADMIN_EMAILS_RETRIEVED_ERROR: case ADMIN_PUBLISH_ERROR: case ADMIN_ANALYZE_ERROR:
       return state
     case ADMIN_PUBLISH_OK:
-    debugger
       let mod = [].concat(state).map(current => current.messageId === payload.messageId ? { ...current, published: true } : current)
       return mod
     case ADMIN_ANALYZE_OK:
-      debugger
       let scored = [].concat(state).map(current => current.messageId === payload.messageId ? { ...current, score: payload.score } : current)
       return scored
     default:
@@ -85,7 +83,8 @@ export function emails (state = [], { type, payload }) {
 export default combineReducers({
   loading,
   emails,
-  publishing
+  publishing,
+  analyzing
 })
 
 // ------------------------------------

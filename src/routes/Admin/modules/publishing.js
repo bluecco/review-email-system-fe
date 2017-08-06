@@ -17,7 +17,6 @@ export function publishLoading (payload) {
 }
 
 export function publishOk (payload) {
-  debugger
   return { type : ADMIN_PUBLISH_OK, payload }
 }
 
@@ -52,12 +51,11 @@ export const actions = {
 export function publishing (state = [], { type, payload }) {
   switch (type) {
     case ADMIN_PUBLISH_LOADING:
-    debugger
       let publishingArray = state
       publishingArray.push(payload)
       return publishingArray
     case ADMIN_PUBLISH_OK: case ADMIN_PUBLISH_ERROR:
-      let array = state
+      let array = [].concat(state)
       remove(array, item => item === payload.messageId)
       return array
     default:
@@ -68,4 +66,7 @@ export function publishing (state = [], { type, payload }) {
 // ------------------------------------
 // Selectors
 // ------------------------------------
-export const isPublishingSelector = state => state.admin.publishing
+export const isPublishingSelector = state => {
+console.log(state.admin)
+  return state.admin.publishing
+}

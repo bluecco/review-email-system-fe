@@ -14,7 +14,6 @@ export class Admin extends Component {
   }
 
   handleAnalyzeClick (id) {
-    debugger
     const { analyzeSentiment } = this.props
     analyzeSentiment(id)
 
@@ -22,7 +21,7 @@ export class Admin extends Component {
 
   render () {
     const { emails } = this.props
-    console.log(emails[0])
+    console.log(this.props)
 
     return (
       <div>

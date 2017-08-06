@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { Row, Column } from 'hedron'
 import Moment from 'react-moment'
 
-export const EmailRow = ({ arrivalDate, email, score, published, publishFn, analyzeFn }) => (
+export const EmailRow = ({ arrivalDate, email, score, published, publishFn, analyzeFn }) => {
+
+  return (
   <Row>
     <Column sm={3}>
       <Moment format="YYYY-MM-DD HH:mm">{arrivalDate}</Moment>
@@ -14,17 +16,24 @@ export const EmailRow = ({ arrivalDate, email, score, published, publishFn, anal
     <Column sm={3}>
     <div>
       {score}
-      <button onClick={analyzeFn}>analyze</button>
+      <button type="button" className="btn btn-primary" onClick={analyzeFn}>analyze</button>
       </div>
     </Column>
     <Column sm={3}>
     <div>
-      -{published}-
-      <button onClick={publishFn}>publish</button>
+      <select
+        className="form-control"
+        defaultValue={published.toString()}
+        onChange={publishFn}
+      >
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
       </div>
     </Column>
   </Row>
 )
+}
 
 EmailRow.propTypes = {
   arrivalDate      : PropTypes.number.isRequired,

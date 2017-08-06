@@ -17,7 +17,6 @@ export function analyzeLoading (payload) {
 }
 
 export function analyzeOk (payload) {
-  debugger
   return { type : ADMIN_ANALYZE_OK, payload }
 }
 
@@ -56,8 +55,7 @@ export function analyzing (state = [], { type, payload }) {
       analysisArray.push(payload)
       return analysisArray
     case ADMIN_ANALYZE_OK: case ADMIN_ANALYZE_ERROR:
-    debugger
-      let array = state
+      let array = [].concat(state)
       remove(array, item => item === payload.messageId)
       return array
     default:
