@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { baseURL } from '../../../common'
 import { createSelector } from 'reselect'
+import { publishing, ADMIN_PUBLISH_OK, ADMIN_PUBLISH_ERROR } from './publishing'
 import axios from 'axios'
 
 // ------------------------------------
@@ -65,8 +66,11 @@ export function emails (state = [], { type, payload }) {
   switch (type) {
     case ADMIN_EMAILS_RETRIEVED:
       return payload
-    case ADMIN_EMAILS_RETRIEVED_ERROR:
+    case ADMIN_EMAILS_RETRIEVED_ERROR: case ADMIN_PUBLISH_ERROR:
       return state
+    case ADMIN_PUBLISH_OK:
+      let mod = [].concat(state).map(current => current.id === payload.id ? { ...current, published: true } : current)
+      return mod
     default:
       return state
   }
@@ -74,7 +78,8 @@ export function emails (state = [], { type, payload }) {
 
 export default combineReducers({
   loading,
-  emails
+  emails,
+  publishing
 })
 
 // ------------------------------------
