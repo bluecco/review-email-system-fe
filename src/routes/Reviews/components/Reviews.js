@@ -15,7 +15,18 @@ export class Reviews extends Component {
   }
 
   render () {
-    const { reviews, pageable } = this.props
+    const { reviews, pageable, loading } = this.props
+
+    if (loading) {
+      return (
+        <Row>
+          <Column sm={12}>
+            <span>Loading...</span>
+          </Column>
+        </Row>
+      )
+    }
+
     return (
       <div>
         <h1 style={{marginBottom : '40px'}}>Reviews</h1>

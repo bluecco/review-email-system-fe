@@ -25,7 +25,17 @@ export class Admin extends Component {
   }
 
   render () {
-    const { emails, publishing, analyzing, pageable } = this.props
+    const { emails, loading, publishing, analyzing, pageable } = this.props
+
+    if (loading) {
+      return (
+        <Row>
+          <Column sm={12}>
+            <span>Loading...</span>
+          </Column>
+        </Row>
+      )
+    }
 
     return (
       <div>
