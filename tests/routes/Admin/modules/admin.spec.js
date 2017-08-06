@@ -2,6 +2,12 @@ import {
   ADMIN_LOADING,
   ADMIN_EMAILS_RETRIEVED,
   ADMIN_EMAILS_RETRIEVED_ERROR,
+  fetchEmails,
+  fetchEmailsLoading,
+  fetchEmailsOk,
+  fetchEmailsError,
+  emails,
+  loading,
   default as adminReducer
 } from 'routes/Admin/modules/admin'
 import { baseURL } from 'common'
@@ -62,6 +68,94 @@ describe('(Redux Module) Admin', () => {
 
       state = loading(state, { type : ADMIN_EMAILS_RETRIEVED })
       expect(state).to.equal(false)
+    })
+  })
+
+  describe('(Action Creator) fetchEmailsLoading', () => {
+    it('Should be exported as a function.', () => {
+      expect(fetchEmailsLoading).to.be.a('function')
+    })
+
+    it('Should return an action with type "ADMIN_LOADING".', () => {
+      expect(fetchEmailsLoading()).to.have.property('type', ADMIN_LOADING)
+    })
+
+    it('Should assign the first argument to the "payload" property.', () => {
+      expect(fetchEmailsLoading()).to.have.property('payload', true)
+    })
+  })
+
+  describe('(Action Creator) fetchEmailsOk', () => {
+    it('Should be exported as a function.', () => {
+      expect(fetchEmailsOk).to.be.a('function')
+    })
+
+    it('Should return an action with type "ADMIN_EMAILS_RETRIEVED".', () => {
+      expect(fetchEmailsOk([{ id : 1 }])).to.have.property('type', ADMIN_EMAILS_RETRIEVED)
+    })
+
+    it('Should assign the first argument to the "payload" property.', () => {
+      expect(fetchEmailsOk([{ id : 1 }])).to.have.property('payload').to.eql([{ id : 1 }])
+    })
+  })
+
+  describe('(Action Creator) fetchEmailsError', () => {
+    it('Should be exported as a function.', () => {
+      expect(fetchEmailsError).to.be.a('function')
+    })
+
+    it('Should return an action with type "ADMIN_EMAILS_RETRIEVED_ERROR".', () => {
+      expect(fetchEmailsError('error')).to.have.property('type', ADMIN_EMAILS_RETRIEVED_ERROR)
+    })
+
+    it('Should assign the first argument to the "payload" property.', () => {
+      expect(fetchEmailsError('error')).to.have.property('payload', 'error')
+    })
+  })
+
+  describe('(Action Creator) fetchEmails', () => {
+    it('Should be exported as a function.', () => {
+      expect(fetchEmails).to.be.a('function')
+    })
+    it('should retrieve emails', () => {
+      mockAxios.reset()
+      mockAxios.onGet(`${baseURL}/posts`).reply(200, [{ id: 1 }])
+      const expectedActions = [
+        {
+          type: ADMIN_LOADING,
+          payload: true
+        },
+        {
+          type: ADMIN_EMAILS_RETRIEVED,
+          payload: [{ id: 1 }]
+        }
+      ]
+
+      const store = mockStore({ emails : [] }, expectedActions)
+      return store.dispatch(fetchEmails()).then(
+        () => expect(store.getActions()).to.eql(expectedActions),
+        error => console.log(error)
+      )
+    })
+    it('should got error on retrieve emails', () => {
+      mockAxios.reset()
+      mockAxios.onGet(`${baseURL}/posts`).reply(500, { error : 'error' })
+      const expectedActions = [
+        {
+          type: ADMIN_LOADING,
+          payload: true
+        },
+        {
+          type: ADMIN_EMAILS_RETRIEVED_ERROR,
+          payload: { code: 500, error : 'error' }
+        }
+      ]
+
+      const store = mockStore({ emails : [] }, expectedActions)
+      return store.dispatch(fetchEmails()).then(
+        () => expect(store.getActions()).to.eql(expectedActions),
+        error => console.log(error)
+      )
     })
   })
 
