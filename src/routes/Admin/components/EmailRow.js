@@ -22,7 +22,6 @@ export const EmailRow = ({ arrivalDate, email, score, published }) => (
 EmailRow.propTypes = {
   arrivalDate      : PropTypes.string.isRequired,
   email            : PropTypes.string.isRequired,
-  score            : PropTypes.number.isRequired,
   published        : PropTypes.bool.isRequired
 }
 

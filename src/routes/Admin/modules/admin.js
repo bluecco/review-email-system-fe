@@ -34,7 +34,7 @@ export const fetchEmails = (page = 0, size = 20) => {
     dispatch(fetchEmailsLoading())
     // TODO: add page and size parameters
     return axios.get(`${baseURL}/reviews?page=${page}&size=${size}`).then(
-      response => dispatch(fetchEmailsOk(response.data)),
+      response => dispatch(fetchEmailsOk(response.data.content)),
       error => {
         const { response } = error
         dispatch(fetchEmailsError({ code: response.status, error: response.data.error }))

@@ -13,6 +13,22 @@ export class Reviews extends Component {
     return (
       <div>
         <h1>Reviews</h1>
+
+        {
+          reviews.map(review =>
+            <div key={review.id}>
+              <EmailRow
+                arrivalDate={email.arrivalDate}
+                subject={review.subject}
+                body={review.body}
+                fromEmail={review.fromEmail}
+                fromDisplayName={review.fromDisplayName}
+              />
+              <div style={{'border': 'solid 1px black'}}></div>
+            </div>
+          )
+        }
+
       </div>
     )
   }

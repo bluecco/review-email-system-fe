@@ -25,7 +25,6 @@ export const ReviewRow = ({ arrivalDate, subject, body, fromEmail, fromDisplayNa
 ReviewRow.propTypes = {
   arrivalDate     : PropTypes.string.isRequired,
   fromEamil       : PropTypes.string.isRequired,
-  fromDisplayName : PropTypes.string.isRequired,
   subject         : PropTypes.string.isRequired,
   body            : PropTypes.string.isRequired,
 }

@@ -32,7 +32,7 @@ export const fetchReviews = (page = 0, size = 1) => {
   return (dispatch, getState) => {
     dispatch(fetchReviewsLoading())
     return axios.get(`${baseURL}/reviews/published?page=${page}&size=${size}`).then(
-      response => dispatch(fetchReviewsOk(response.data)),
+      response => dispatch(fetchReviewsOk(response.data.content)),
       error => {
         const { response } = error
         dispatch(fetchReviewsError({ code: response.status, error: response.data.error }))
