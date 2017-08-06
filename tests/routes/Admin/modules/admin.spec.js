@@ -28,4 +28,41 @@ describe('(Redux Module) Admin', () => {
     expect(ADMIN_EMAILS_RETRIEVED_ERROR).to.equal('ADMIN_EMAILS_RETRIEVED_ERROR')
   })
 
+  describe('(Reducer)', () => {
+    it('Should be a function.', () => {
+      expect(adminReducer).to.be.a('function')
+    })
+    it('Should initialize "emails" with empty array', () => {
+      let state = emails(undefined, {})
+      expect(state).to.eql([])
+    })
+    it('Should return previous state of mails if an action was not matched', () => {
+      let state = emails(undefined, {})
+      expect(state).to.be.empty
+
+      state = emails(state, fetchEmailsOk([{ email: "email1" }, { email: "email1" }]))
+      expect(state).to.have.lengthOf(2)
+
+      state = emails(state, { type : 'UNKNOWN' })
+      expect(state).to.have.lengthOf(2)
+    })
+    it('Should initialize "loading" with false', () => {
+      let state = loading(undefined, {})
+      expect(state).to.equal(false)
+    })
+    it('Should return previous state of loading if an action was not matched', () => {
+      let state = loading(undefined, {})
+      expect(state).to.equal(false)
+
+      state = loading(state, { type : ADMIN_LOADING })
+      expect(state).to.equal(true)
+
+      state = loading(state, { type : 'UNKNOWN' })
+      expect(state).to.equal(true)
+
+      state = loading(state, { type : ADMIN_EMAILS_RETRIEVED })
+      expect(state).to.equal(false)
+    })
+  })
+
 })
