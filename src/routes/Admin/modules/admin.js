@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { baseURL } from '../../../common'
 import { createSelector } from 'reselect'
 import { publishing, ADMIN_PUBLISH_OK, ADMIN_PUBLISH_ERROR } from './publishing'
+import { analyzing, ADMIN_ANALYZE_OK, ADMIN_ANALYZE_ERROR } from './analyze'
 import axios from 'axios'
 
 // ------------------------------------
@@ -34,7 +35,7 @@ export const fetchEmails = (page = 0, size = 20) => {
     dispatch(fetchEmailsLoading())
     // TODO: add page and size parameters
     return axios.get(`${baseURL}/reviews?page=${page}&size=${size}`).then(
-      response => dispatch(fetchEmailsOk(response.data)),
+      response => dispatch(fetchEmailsOk(response.data.content)),
       error => {
         const { response } = error
         dispatch(fetchEmailsError({ code: response.status, error: response.data.error }))
@@ -66,11 +67,14 @@ export function emails (state = [], { type, payload }) {
   switch (type) {
     case ADMIN_EMAILS_RETRIEVED:
       return payload
-    case ADMIN_EMAILS_RETRIEVED_ERROR: case ADMIN_PUBLISH_ERROR:
+    case ADMIN_EMAILS_RETRIEVED_ERROR: case ADMIN_PUBLISH_ERROR: case ADMIN_ANALYZE_ERROR:
       return state
     case ADMIN_PUBLISH_OK:
-      let mod = [].concat(state).map(current => current.id === payload.id ? { ...current, published: true } : current)
+      let mod = [].concat(state).map(current => current.messageId === payload.messageId ? { ...current, published: true } : current)
       return mod
+    case ADMIN_ANALYZE_OK:
+      let scored = [].concat(state).map(current => current.messageId === payload.messageId ? { ...current, score: payload.score } : current)
+      return scored
     default:
       return state
   }
@@ -79,7 +83,8 @@ export function emails (state = [], { type, payload }) {
 export default combineReducers({
   loading,
   emails,
-  publishing
+  publishing,
+  analyzing
 })
 
 // ------------------------------------

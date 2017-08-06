@@ -4,16 +4,28 @@ import {
   getAdminMails,
   isLoadingSelector
 } from '../modules/admin'
+import {
+  updatePublishStatus,
+  isPublishingSelector
+} from '../modules/publishing'
+import {
+  analyzeSentiment,
+  analyzingSelector
+ } from '../modules/analyze'
 
 import Admin from '../components/Admin'
 
 const mapDispatchToProps = {
-  fetchEmails
+  fetchEmails,
+  updatePublishStatus,
+  analyzeSentiment
 }
 
 const mapStateToProps = (state) => ({
   emails: getAdminMails(state),
-  loading: isLoadingSelector(state)
+  loading: isLoadingSelector(state),
+  publishing: isPublishingSelector(state),
+  analyzing: analyzingSelector(state)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin)

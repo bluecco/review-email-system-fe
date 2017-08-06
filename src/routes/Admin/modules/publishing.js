@@ -12,8 +12,8 @@ export const ADMIN_PUBLISH_ERROR = 'ADMIN_PUBLISH_ERROR'
 // ------------------------------------
 // Actions Creators
 // ------------------------------------
-export function publishLoading () {
-  return { type : ADMIN_PUBLISH_LOADING, payload : true }
+export function publishLoading (payload) {
+  return { type : ADMIN_PUBLISH_LOADING, payload }
 }
 
 export function publishOk (payload) {
@@ -27,10 +27,10 @@ export function publishError (payload) {
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const updatePublishStatus = (id, body) => {
+export const updatePublishStatus = (id) => {
   return dispatch => {
-    dispatch(publishLoading())
-    return axios.put(`${baseURL}/reviews/${id}/reviews`, body).then(
+    dispatch(publishLoading(id))
+    return axios.put(`${baseURL}/reviews/${id}/publish`).then(
       response => dispatch(publishOk(response.data)),
       error => {
         const { response } = error
@@ -52,11 +52,11 @@ export function publishing (state = [], { type, payload }) {
   switch (type) {
     case ADMIN_PUBLISH_LOADING:
       let publishingArray = state
-      publishingArray.push(payload.id)
+      publishingArray.push(payload)
       return publishingArray
     case ADMIN_PUBLISH_OK: case ADMIN_PUBLISH_ERROR:
-      let array = state
-      remove(array, item => item === payload.id)
+      let array = [].concat(state)
+      remove(array, item => item === payload.messageId)
       return array
     default:
       return state

@@ -1,6 +1,6 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
-import { Counter, Header, EmailRow } from 'routes/Admin/components'
+import { Header, EmailRow, Admin } from 'routes/Admin/components'
 import { shallow, mount } from 'enzyme'
 
 describe('(Component) Admin', () => {
@@ -9,10 +9,12 @@ describe('(Component) Admin', () => {
     _spies = {}
     _props = {
       emails : [
-        { arrivalDate: 1, email: 'email', score: 'score', published: 1 },
-        { arrivalDate: 2, email: 'email', score: 'score', published: 2 },
-        { arrivalDate: 3, email: 'email', score: 'score', published: 3 }
+        { messageId: 1, arrivalDate: 1, email: 'email', score: 'score', published: 1 },
+        { messageId: 2, arrivalDate: 2, email: 'email', score: 'score', published: 2 },
+        { messageId: 3, arrivalDate: 3, email: 'email', score: 'score', published: 3 }
       ],
+      publishing : [1,2,3],
+      analyzing  : [1,2,3],
       ...bindActionCreators(
         {
           fetchEmails : (_spies.fetchEmails = sinon.spy())
@@ -23,11 +25,7 @@ describe('(Component) Admin', () => {
   })
   describe('- Shallow -', () => {
     beforeEach(() => {
-      _wrapper = shallow(<Counter {..._props} />)
-    })
-
-    it('renders as a <div>.', () => {
-      expect(_wrapper.is('div')).to.equal(true)
+      _wrapper = shallow(<Admin {..._props} />)
     })
 
     it('renders with an <Header>', () => {
