@@ -23,7 +23,7 @@ EmailRow.propTypes = {
   arrivalDate      : PropTypes.string.isRequired,
   email            : PropTypes.string.isRequired,
   score            : PropTypes.number.isRequired,
-  published        : PropTypes.boolean.isRequired
+  published        : PropTypes.bool.isRequired
 }
 
 export default EmailRow

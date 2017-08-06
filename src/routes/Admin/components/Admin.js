@@ -17,10 +17,10 @@ export class Admin extends Component {
           emails.map(email =>
             <EmailRow
               key={email.id}
-              id={email.id}
-              body={email.body}
-              title={email.title}
-              userId={email.userId}
+              arrivalDate={email.arrivalDate}
+              email={email.email}
+              score={email.score}
+              published={email.published}
             />
           )
         }
