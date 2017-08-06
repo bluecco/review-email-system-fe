@@ -10,6 +10,7 @@ import axios from 'axios'
 // ------------------------------------
 export const ADMIN_LOADING = 'ADMIN_LOADING'
 export const ADMIN_EMAILS_RETRIEVED = 'ADMIN_EMAILS_RETRIEVED'
+export const ADMIN_EMAILS_RETRIEVED_PAGES = 'ADMIN_EMAILS_RETRIEVED_PAGES'
 export const ADMIN_EMAILS_RETRIEVED_ERROR = 'ADMIN_EMAILS_RETRIEVED_ERROR'
 
 // ------------------------------------
@@ -20,7 +21,15 @@ export function fetchEmailsLoading () {
 }
 
 export function fetchEmailsOk (payload) {
-  return { type : ADMIN_EMAILS_RETRIEVED, payload }
+  return dispatch => {
+    dispatch({ type : ADMIN_EMAILS_RETRIEVED, payload : payload.content })
+
+    const {number, totalElements, totalPages, size, numberOfElements, first, last} = payload;
+    dispatch({
+      type : ADMIN_EMAILS_RETRIEVED_PAGES,
+      payload : { number, totalElements, totalPages, size, numberOfElements, first, last }
+    })
+  }
 }
 
 export function fetchEmailsError (payload) {
@@ -35,7 +44,7 @@ export const fetchEmails = (page = 0, size = 20) => {
     dispatch(fetchEmailsLoading())
     // TODO: add page and size parameters
     return axios.get(`${baseURL}/reviews?page=${page}&size=${size}`).then(
-      response => dispatch(fetchEmailsOk(response.data.content)),
+      response => dispatch(fetchEmailsOk(response.data)),
       error => {
         const { response } = error
         dispatch(fetchEmailsError({ code: response.status, error: response.data.error }))
@@ -63,6 +72,13 @@ export function loading (state = false, { type }) {
   }
 }
 
+export function pageable(state = {}, {type, payload}) {
+  if(type === ADMIN_EMAILS_RETRIEVED_PAGES) {
+    return payload
+  }
+  return state;
+}
+
 export function emails (state = [], { type, payload }) {
   switch (type) {
     case ADMIN_EMAILS_RETRIEVED:
@@ -84,13 +100,15 @@ export default combineReducers({
   loading,
   emails,
   publishing,
-  analyzing
+  analyzing,
+  pageable
 })
 
 // ------------------------------------
 // Selectors
 // ------------------------------------
 export const isLoadingSelector = state => state.admin.loading
+export const pageableSelector = state => state.admin.pageable
 
 const emailsSelector = state => state.admin.emails
 export const getAdminMails = createSelector(

@@ -15,6 +15,15 @@ describe('(Component) Admin', () => {
       ],
       publishing : [1,2,3],
       analyzing  : [1,2,3],
+      pageable: {
+        number : 1,
+        totalElements: 1,
+        totalPages: 1,
+        size: 1,
+        numberOfElements: 1,
+        first: 1,
+        last: 1
+      },
       ...bindActionCreators(
         {
           fetchEmails : (_spies.fetchEmails = sinon.spy())

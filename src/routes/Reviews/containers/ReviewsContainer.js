@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import {
   fetchReviews,
   getAdminMails,
-  isLoading
+  isLoading,
+  pageableSelector
 } from '../modules/reviews'
 
 import Reviews from '../components/Reviews'
@@ -13,7 +14,8 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   reviews: getAdminMails(state),
-  loading: isLoading(state)
+  loading: isLoading(state),
+  pageable: pageableSelector(state)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reviews)

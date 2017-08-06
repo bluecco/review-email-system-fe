@@ -1,6 +1,7 @@
 import {
   REVIEWS_LOADING,
   REVIEWS_RETRIEVED,
+  REVIEWS_RETRIEVED_PAGES,
   REVIEWS_RETRIEVED_ERROR,
   fetchReviews,
   fetchReviewsLoading,
@@ -30,6 +31,10 @@ describe('(Redux Module) Reviews', () => {
     expect(REVIEWS_RETRIEVED).to.equal('REVIEWS_RETRIEVED')
   })
 
+  it('Should export a constant REVIEWS_RETRIEVED_PAGES.', () => {
+    expect(REVIEWS_RETRIEVED_PAGES).to.equal('REVIEWS_RETRIEVED_PAGES')
+  })
+
   it('Should export a constant REVIEWS_RETRIEVED_ERROR.', () => {
     expect(REVIEWS_RETRIEVED_ERROR).to.equal('REVIEWS_RETRIEVED_ERROR')
   })
@@ -46,7 +51,14 @@ describe('(Redux Module) Reviews', () => {
       let state = list(undefined, {})
       expect(state).to.be.empty
 
-      state = list(state, fetchReviewsOk([{ id: 1 }, { id: 2 }]))
+      state = list(state,
+         {
+           type: REVIEWS_RETRIEVED,
+           payload: [
+             { id: 1 }, { id: 2 }
+           ]
+         }
+       )
       expect(state).to.have.lengthOf(2)
 
       state = list(state, { type : 'UNKNOWN' })
@@ -85,20 +97,6 @@ describe('(Redux Module) Reviews', () => {
     })
   })
 
-  describe('(Action Creator) fetchReviewsOk', () => {
-    it('Should be exported as a function.', () => {
-      expect(fetchReviewsOk).to.be.a('function')
-    })
-
-    it('Should return an action with type "REVIEWS_RETRIEVED".', () => {
-      expect(fetchReviewsOk([{ id : 1 }])).to.have.property('type', REVIEWS_RETRIEVED)
-    })
-
-    it('Should assign the first argument to the "payload" property.', () => {
-      expect(fetchReviewsOk([{ id : 1 }])).to.have.property('payload').to.eql([{ id : 1 }])
-    })
-  })
-
   describe('(Action Creator) fetchReviewsError', () => {
     it('Should be exported as a function.', () => {
       expect(fetchReviewsError).to.be.a('function')
@@ -113,7 +111,42 @@ describe('(Redux Module) Reviews', () => {
     })
   })
 
-  describe('(Action Creator) fetchEmails', () => {
+  describe('(Action Creator) fetchReviewsOk', () => {
+    it('Should be exported as a function.', () => {
+      expect(fetchReviewsOk).to.be.a('function')
+    })
+
+    it('Should dispatch: "REVIEWS_RETRIEVED and REVIEWS_RETRIEVED_PAGES".', () => {
+
+      const payload = {
+        content : [{ id: 1}],
+        number : 1,
+        totalElements: 1,
+        totalPages: 1,
+        size: 1,
+        numberOfElements: 1,
+        first: 1,
+        last: 1
+      }
+
+      const expectedActions = [
+        {
+          type: REVIEWS_RETRIEVED,
+          payload: [{ id: 1 }]
+        },
+        {
+          type: REVIEWS_RETRIEVED_PAGES,
+          payload: { number : 1, totalElements: 1, totalPages: 1, size: 1, numberOfElements: 1, first: 1, last: 1 }
+        }
+      ]
+
+      const store = mockStore({ list : [], pageable: {} }, expectedActions)
+      store.dispatch(fetchReviewsOk(payload))
+      expect(store.getActions()).to.eql(expectedActions)
+    })
+  })
+
+  describe('(Action Creator) fetchReviews', () => {
     it('Should be exported as a function.', () => {
       expect(fetchReviews).to.be.a('function')
     })

@@ -46,7 +46,14 @@ describe('(Redux Module) Admin', () => {
       let state = emails(undefined, {})
       expect(state).to.be.empty
 
-      state = emails(state, fetchEmailsOk([{ email: "email1" }, { email: "email1" }]))
+      state = emails(state,
+         {
+           type: ADMIN_EMAILS_RETRIEVED,
+           payload: [
+             { id: 1 }, { id: 2 }
+           ]
+         }
+       )
       expect(state).to.have.lengthOf(2)
 
       state = emails(state, { type : 'UNKNOWN' })
@@ -85,20 +92,6 @@ describe('(Redux Module) Admin', () => {
     })
   })
 
-  describe('(Action Creator) fetchEmailsOk', () => {
-    it('Should be exported as a function.', () => {
-      expect(fetchEmailsOk).to.be.a('function')
-    })
-
-    it('Should return an action with type "ADMIN_EMAILS_RETRIEVED".', () => {
-      expect(fetchEmailsOk([{ id : 1 }])).to.have.property('type', ADMIN_EMAILS_RETRIEVED)
-    })
-
-    it('Should assign the first argument to the "payload" property.', () => {
-      expect(fetchEmailsOk([{ id : 1 }])).to.have.property('payload').to.eql([{ id : 1 }])
-    })
-  })
-
   describe('(Action Creator) fetchEmailsError', () => {
     it('Should be exported as a function.', () => {
       expect(fetchEmailsError).to.be.a('function')
@@ -110,6 +103,41 @@ describe('(Redux Module) Admin', () => {
 
     it('Should assign the first argument to the "payload" property.', () => {
       expect(fetchEmailsError('error')).to.have.property('payload', 'error')
+    })
+  })
+
+  describe('(Action Creator) fetchEmailsOk', () => {
+    it('Should be exported as a function.', () => {
+      expect(fetchEmailsOk).to.be.a('function')
+    })
+
+    it('Should dispatch: "ADMIN_EMAILS_RETRIEVED and ADMIN_EMAILS_RETRIEVED_ERROR".', () => {
+
+      const payload = {
+        content : [{ id: 1}],
+        number : 1,
+        totalElements: 1,
+        totalPages: 1,
+        size: 1,
+        numberOfElements: 1,
+        first: 1,
+        last: 1
+      }
+
+      const expectedActions = [
+        {
+          type: ADMIN_EMAILS_RETRIEVED,
+          payload: [{ id: 1 }]
+        },
+        {
+          type: ADMIN_EMAILS_RETRIEVED_ERROR,
+          payload: { number : 1, totalElements: 1, totalPages: 1, size: 1, numberOfElements: 1, first: 1, last: 1 }
+        }
+      ]
+
+      const store = mockStore({ list : [], pageable: {} }, expectedActions)
+      store.dispatch(fetchEmailsOk(payload))
+      expect(store.getActions()).to.eql(expectedActions)
     })
   })
 

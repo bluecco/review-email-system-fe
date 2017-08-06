@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import {
   fetchEmails,
   getAdminMails,
-  isLoadingSelector
+  isLoadingSelector,
+  pageableSelector
 } from '../modules/admin'
 import {
   updatePublishStatus,
@@ -25,7 +26,8 @@ const mapStateToProps = (state) => ({
   emails: getAdminMails(state),
   loading: isLoadingSelector(state),
   publishing: isPublishingSelector(state),
-  analyzing: analyzingSelector(state)
+  analyzing: analyzingSelector(state),
+  pageable: pageableSelector(state)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin)
