@@ -27,10 +27,10 @@ export function publishError (payload) {
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const updatePublishStatus = (id, body) => {
+export const updatePublishStatus = (id) => {
   return dispatch => {
     dispatch(publishLoading())
-    return axios.put(`${baseURL}/reviews/${id}/reviews`, body).then(
+    return axios.put(`${baseURL}/reviews/${id}/reviews`).then(
       response => dispatch(publishOk(response.data)),
       error => {
         const { response } = error

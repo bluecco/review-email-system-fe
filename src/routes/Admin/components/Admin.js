@@ -8,6 +8,12 @@ export class Admin extends Component {
     fetchEmails()
   }
 
+  handlePublishClick (id) {
+    debugger;
+    const { updatePublishStatus } = this.props
+    updatePublishStatus(id)
+  }
+
   render () {
     const { emails } = this.props
 
@@ -16,13 +22,13 @@ export class Admin extends Component {
         <Header />
         {
           emails.map(email =>
-            <div key={email.id}>
+            <div key={email.messageId}>
               <EmailRow
-                key={email.id}
                 arrivalDate={email.arrivalDate}
                 email={email.fromEmail}
                 score={email.score}
                 published={email.published}
+                publishFn={() => this.handlePublishClick(email.messageId)}
               />
               <div style={{'border': 'solid 1px black'}}></div>
             </div>

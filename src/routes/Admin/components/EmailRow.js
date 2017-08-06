@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Row, Column } from 'hedron'
 
-export const EmailRow = ({ arrivalDate, email, score, published }) => (
+export const EmailRow = ({ arrivalDate, email, score, published, publishFn }) => (
   <Row>
     <Column sm={3}>
       {arrivalDate}
@@ -15,6 +15,9 @@ export const EmailRow = ({ arrivalDate, email, score, published }) => (
     </Column>
     <Column sm={3}>
       {published}
+    </Column>
+    <Column sm={3}>
+    <button onClick={publishFn}>publish</button>
     </Column>
   </Row>
 )
