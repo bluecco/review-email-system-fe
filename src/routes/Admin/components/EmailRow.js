@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Row, Column } from 'hedron'
+import Moment from 'react-moment'
 
 export const EmailRow = ({ arrivalDate, email, score, published, publishFn, analyzeFn }) => (
   <Row>
     <Column sm={3}>
-      {arrivalDate}
+      <Moment format="YYYY-MM-DD HH:mm">{arrivalDate}</Moment>
     </Column>
     <Column sm={3}>
       {email}
@@ -26,7 +27,7 @@ export const EmailRow = ({ arrivalDate, email, score, published, publishFn, anal
 )
 
 EmailRow.propTypes = {
-  arrivalDate      : PropTypes.string.isRequired,
+  arrivalDate      : PropTypes.number.isRequired,
   email            : PropTypes.string.isRequired,
   published        : PropTypes.bool.isRequired,
   publishFn        : PropTypes.func.isRequired,
