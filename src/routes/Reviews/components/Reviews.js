@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReviewRow from './ReviewRow'
 
 export class Reviews extends Component {
 
@@ -10,15 +11,16 @@ export class Reviews extends Component {
   render () {
 
     const { reviews } = this.props
+    console.log(reviews)
     return (
       <div>
         <h1>Reviews</h1>
 
         {
           reviews.map(review =>
-            <div key={review.id}>
-              <EmailRow
-                arrivalDate={email.arrivalDate}
+            <div key={review.messageId}>
+              <ReviewRow
+                arrivalDate={review.arrivalDate}
                 subject={review.subject}
                 body={review.body}
                 fromEmail={review.fromEmail}

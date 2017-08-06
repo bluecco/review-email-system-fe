@@ -5,26 +5,26 @@ import { Row, Column } from 'hedron'
 export const ReviewRow = ({ arrivalDate, subject, body, fromEmail, fromDisplayName }) => (
   <Row>
     <Column sm={3}>
-      {arrivalDate}
+      <span>{arrivalDate}</span>
     </Column>
     <Column sm={3}>
-      {fromEmail}
+      <span>{fromEmail}</span>
     </Column>
     <Column sm={3}>
-      {fromDisplayName}
+      <span>{fromDisplayName}</span>
     </Column>
     <Column sm={3}>
-      {subject}
+      <span>{subject}</span>
     </Column>
     <Column sm={3}>
-      {body}
+      <span>{body}</span>
     </Column>
   </Row>
 )
 
 ReviewRow.propTypes = {
   arrivalDate     : PropTypes.string.isRequired,
-  fromEamil       : PropTypes.string.isRequired,
+  fromEmail       : PropTypes.string.isRequired,
   subject         : PropTypes.string.isRequired,
   body            : PropTypes.string.isRequired,
 }
