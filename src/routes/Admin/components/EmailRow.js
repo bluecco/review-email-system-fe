@@ -3,25 +3,53 @@ import PropTypes from 'prop-types'
 import { Row, Column } from 'hedron'
 import Moment from 'react-moment'
 
+const cellStyle = {
+  color : 'white'
+}
+
+const renderSmile = score => {
+  if (!score) {
+    return ("")
+  }
+
+  const className = `fa ${score < 70 ? 'fa-frown-o' : 'fa-smile-o'}`
+
+  return (
+    <i
+      style={{'position': 'absolute', 'left': '0', 'fontSize': '25px', color: 'white'}}
+      className={className}
+    />
+  )
+
+}
+
+const renderAnalyze = score => {
+  return !score ?
+    <i className="fa fa-calculator" /> :
+    <i className="fa fa-refresh" />
+}
+
 export const EmailRow = ({ arrivalDate, email, score, published, publishFn, analyzeFn, publishing, analyzing  }) => (
-  <Row style={{'background': !score ? 'lightgrey' : score < 70 ? 'Crimson' : 'LimeGreen'}}>
+  <Row style={{'background': !score ? 'DarkGray' : score < 70 ? 'Crimson' : 'LimeGreen'}}>
 
     <Column sm={3}>
       <Moment
         format="YYYY-MM-DD HH:mm"
-        style={{'color' : 'white'}}
+        style={cellStyle}
       >
         {arrivalDate}
       </Moment>
     </Column>
 
     <Column sm={3}>
-      <span style={{'color' : 'white'}}>{email}</span>
+      <span style={cellStyle}>{email}</span>
     </Column>
 
     <Column sm={2}>
       <div style={{'position' : 'relative'}}>
-        <span style={{'color' : 'white'}}>{score}</span>
+        {renderSmile(score)}
+        <span style={cellStyle}>{score}</span>
+        {!score && <span style={cellStyle}>-</span>}
         <button
           style={{'position': 'absolute', 'right': '0'}}
           type="button"
@@ -29,7 +57,7 @@ export const EmailRow = ({ arrivalDate, email, score, published, publishFn, anal
           onClick={analyzeFn}
           disabled={analyzing}
         >
-          <i className="fa fa-refresh"></i>
+          {renderAnalyze(score)}
         </button>
       </div>
     </Column>
