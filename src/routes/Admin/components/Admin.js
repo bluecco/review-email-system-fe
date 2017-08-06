@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Header, EmailRow } from './index'
+import { Row, Column } from 'hedron'
 
 export class Admin extends Component {
   componentWillMount () {
@@ -16,11 +17,16 @@ export class Admin extends Component {
   handleAnalyzeClick (id) {
     const { analyzeSentiment } = this.props
     analyzeSentiment(id)
+  }
 
+  handlePageClick (isNext) {
+    const { fetchEmails, pageable } = this.props
+    fetchEmails(isNext ? pageable.number + 1 : pageable.number - 1)
   }
 
   render () {
-    const { emails, publishing, analyzing } = this.props
+    const { emails, publishing, analyzing, pageable } = this.props
+
     return (
       <div>
         <Header />
@@ -41,6 +47,28 @@ export class Admin extends Component {
             </div>
           )
         }
+
+        <Row>
+          <Column sm={12}>
+            {pageable.totalPages > 1 &&
+              <button
+                type="button"
+                disabled={pageable.first}
+                className="btn btn-secondary"
+                onClick={() => this.handlePageClick(false)}
+              ><i className="fa fa-backward"></i></button>
+            }
+            {pageable.totalPages > 1 &&
+              <button
+                type="button"
+                disabled={pageable.last}
+                className="btn btn-secondary"
+                onClick={() => this.handlePageClick(true)}
+              ><i className="fa fa-forward"></i></button>
+            }
+          </Column>
+        </Row>
+
       </div>
     )
   }
